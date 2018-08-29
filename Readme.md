@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Рототаев](https://up.htmlacademy.ru/javascript/15/user/484805).
-* Наставник: `Неизвестно`.
+* Наставник: Роман Мисюрин.
 
 ---
 
