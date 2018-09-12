@@ -23,8 +23,6 @@ var getRandomInt = function (min, max) {
 
 };
 
-var usersPhotos = [];
-
 var getRandomCommentsList = function (amount) {
 
   var commentsList = [];
@@ -42,22 +40,26 @@ var getRandomCommentsList = function (amount) {
 
 var getPhotoInfo = function (photosCount) {
 
+  var usersPhotosList = [];
+  var photoPage = {};
+
   for (var i = 0; i < photosCount; i++) {
 
-    var photoPage = {
+    photoPage = {
       url: 'photos/' + (i + 1) + '.jpg',
       likes: getRandomInt(15, 200),
       comments: getRandomCommentsList(1),
       description: PHOTO_DESCRIPTIONS[getRandomInt(0, 5)],
     };
 
-    usersPhotos.push(photoPage);
+    usersPhotosList.push(photoPage);
 
   }
+  return usersPhotosList;
 
 };
 
-getPhotoInfo(PHOTOS_COUNT);
+var usersPhotos = getPhotoInfo(PHOTOS_COUNT);
 
 var pictureTemplate = document.querySelector('#picture')
     .content
