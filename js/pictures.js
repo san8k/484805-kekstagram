@@ -222,30 +222,31 @@ var tuneEffect = function (power) {
 
   var currentFilter = uploadedImg.classList[1].split('--')[1];
 
-  if (currentFilter === 'chrome') {
+  switch (currentFilter) {
 
-    uploadedImg.style.filter = 'grayscale(' + power / 100 + ')';
+    case 'chrome':
+      uploadedImg.style.filter = 'grayscale(' + power / 100 + ')';
+      break;
 
-  } else if (currentFilter === 'sepia') {
+    case 'sepia':
+      uploadedImg.style.filter = 'sepia(' + power / 100 + ')';
+      break;
 
-    uploadedImg.style.filter = 'sepia(' + power / 100 + ')';
+    case 'marvin':
+      uploadedImg.style.filter = 'invert(' + power + '%)';
+      break;
 
-  } else if (currentFilter === 'marvin') {
+    case 'phobos':
+      uploadedImg.style.filter = 'blur(' + (power / 33.3).toFixed(2) + 'px)';
+      break;
 
-    uploadedImg.style.filter = 'invert(' + power + '%)';
+    case 'heat':
+      uploadedImg.style.filter = 'brightness(' + (power / 50 + 1) + ')';
+      break;
 
-  } else if (currentFilter === 'phobos') {
-
-    uploadedImg.style.filter = 'blur(' + (power / 33.3).toFixed(2) + 'px)';
-
-  } else if (currentFilter === 'heat') {
-
-    uploadedImg.style.filter = 'brightness(' + (power / 50 + 1) + ')';
-
-  } else {
-
-    uploadedImg.style.filter = 'none';
-
+    default:
+      uploadedImg.style.filter = 'none';
+      break;
   }
 
   return uploadedImg.style.filter;
