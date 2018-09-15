@@ -270,7 +270,7 @@ buttonMinus.addEventListener('click', function () {
 
   var currentScaleValue = parseInt((scaleControlValue.value.split('')[0] + scaleControlValue.value.split('')[1]), 10);
 
-  if (scaleControlValue.value.split('').length < 2) {
+  if (scaleControlValue.value.split('').length < 3) {
 
     currentScaleValue = parseInt(scaleControlValue.value.split('')[0], 10);
 
@@ -290,9 +290,13 @@ buttonPlus.addEventListener('click', function () {
 
   var currentScaleValue = parseInt((scaleControlValue.value.split('')[0] + scaleControlValue.value.split('')[1]), 10);
 
-  if (scaleControlValue.value.split('') > 2) {
+  if (scaleControlValue.value.split('').length > 3) {
 
-    currentScaleValue = parseInt((scaleControlValue.value.split('')[0] + scaleControlValue.value.split('')[1] + scaleControlValue.value.split('')[2]), 10);
+    for (var i = 1; i < scaleControlValue.value.split('').length; i++) {
+
+      currentScaleValue += parseInt(scaleControlValue.value.split('')[i - 1], 10);
+
+    }
 
   }
 
