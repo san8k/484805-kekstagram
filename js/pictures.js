@@ -127,19 +127,19 @@ var uploadCancel = uploadSection.querySelector('#upload-cancel');
 var onRedactorEscPress = function (evt) {
 
   if (evt.keyCode === ESC_KEYCODE) {
-    hideImgRedactor();
+    hideImageRedactor();
   }
 
 };
 
-var showImgRedactor = function () {
+var showImageRedactor = function () {
 
   uploadSection.querySelector('.img-upload__overlay').classList.remove('hidden');
   document.addEventListener('keydown', onRedactorEscPress);
 
 };
 
-var hideImgRedactor = function () {
+var hideImageRedactor = function () {
 
   uploadSection.querySelector('.img-upload__overlay').classList.add('hidden');
   uploadFile.value = null;
@@ -147,12 +147,12 @@ var hideImgRedactor = function () {
 
 };
 
-uploadFile.addEventListener('change', showImgRedactor);
+uploadFile.addEventListener('change', showImageRedactor);
 
-uploadCancel.addEventListener('click', hideImgRedactor);
+uploadCancel.addEventListener('click', hideImageRedactor);
 
 var miniPicturesContainer = document.querySelector('.pictures');
-var picturesHrefs = miniPicturesContainer.querySelectorAll('a');
+var miniPictures = miniPicturesContainer.querySelectorAll('img');
 
 var onBigPictureEscPress = function (evt) {
 
@@ -176,11 +176,11 @@ var hideIBigPicture = function () {
 
 };
 
-picturesHrefs.forEach(function (href, i) {
+miniPictures.forEach(function (image, i) {
 
-  href.addEventListener('click', function () {
+  image.addEventListener('click', function () {
 
-    renderBigPhoto(usersPhotos[i]);
+    renderBigPhoto(usersPhotos[i - 1]);
     showBigPicture();
 
   });
@@ -208,17 +208,40 @@ effects.addEventListener('click', function (evt) {
 
 }, true);
 
-var effectPower = function () {
+var calculateEffectPower = function () {
 
   effectValue.value = levelPin.offsetLeft;
   var currentPower = 100 * levelPin.offsetLeft / 455;
+  return currentPower;
+
+};
+
+var tuneEffect = function (power) {
+
   var currentFilter = uploadedImg.classList[1].split('--')[1];
-  uploadedImg.style.filter = currentFilter + '(' + currentPower + ')';
+
+  if (currentFilter === 'chrome' || currentFilter === 'sepia') {
+
+    uploadedImg.style.filter = currentFilter + '(' + power / 100 + ')';
+
+  } else if (currentFilter === 'marvin') {
+
+    uploadedImg.style.filter = 'invert(' + power + '%)';
+
+  } else if (currentFilter === 'phobos') {
+
+    uploadedImg.style.filter = 'blur(' + (power / 33.3).toFixed(2) + 'px)';
+
+  } else if (currentFilter === 'heat') {
+
+    uploadedImg.style.filter = 'brightness(' + (power / 50 + 1) + ')';
+
+  }
 
 };
 
 levelPin.addEventListener('mouseup', function () {
 
-  effectPower();
+  tuneEffect(calculateEffectPower());
 
 });
