@@ -265,7 +265,6 @@ var buttonPlus = uploadSection.querySelector('.scale__control--bigger');
 var scaleControlValue = uploadSection.querySelector('input[name="scale"]');
 var currentTransformScale = 1;
 
-
 buttonMinus.addEventListener('click', function () {
 
   var currentScaleValue = parseInt((scaleControlValue.value.split('')[0] + scaleControlValue.value.split('')[1]), 10);
@@ -279,7 +278,7 @@ buttonMinus.addEventListener('click', function () {
   if (currentScaleValue >= SCALE_STEP) {
 
     scaleControlValue.value = (currentScaleValue - SCALE_STEP) + '%';
-    currentTransformScale -= 0.25;
+    currentTransformScale -= SCALE_STEP / 100;
     uploadedImg.style.transform = 'scale(' + currentTransformScale + ')';
 
   }
@@ -303,7 +302,7 @@ buttonPlus.addEventListener('click', function () {
   if (currentScaleValue + SCALE_STEP <= 100) {
 
     scaleControlValue.value = (currentScaleValue + SCALE_STEP) + '%';
-    currentTransformScale += 0.25;
+    currentTransformScale += SCALE_STEP / 100;
     uploadedImg.style.transform = 'scale(' + currentTransformScale + ')';
 
   }
