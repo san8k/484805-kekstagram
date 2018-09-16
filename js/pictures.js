@@ -128,8 +128,10 @@ var uploadCancel = uploadSection.querySelector('#upload-cancel');
 
 var onRedactorEscPress = function (evt) {
 
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && previewDescription !== document.activeElement && previewHashtags !== document.activeElement) {
+
     hideImageRedactor();
+
   }
 
 };
@@ -159,7 +161,9 @@ var miniPictures = miniPicturesContainer.querySelectorAll('img');
 var onBigPictureEscPress = function (evt) {
 
   if (evt.keyCode === ESC_KEYCODE) {
+
     hideIBigPicture();
+
   }
 
 };
@@ -312,3 +316,56 @@ buttonPlus.addEventListener('click', function () {
 
 });
 
+var previewHashtags = uploadSection.querySelector('input[name="hashtags"]');
+var previewDescription = uploadSection.querySelector('textarea[name="description"]');
+var submitButton = uploadSection.querySelector('#upload-submit');
+
+var hashtagsValidation = function (string) {
+
+  var hashtagsLowerCase = string.value.toLowerCase();
+
+  var hashtagsArray = hashtagsLowerCase.split(' ');
+  hashtagsArray.sort();
+
+  for (var i = 0; i < hashtagsArray.length; i++) {
+
+    var currentHashtagLetters = hashtagsArray[i].split('');
+
+    if (currentHashtagLetters.length > 20) {
+
+      previewHashtags.setCustomValidity('Длина хэш-тега должна быть не более 20 символов');
+
+    } else if (currentHashtagLetters[0] !== '#') {
+
+      previewHashtags.setCustomValidity('Хэш-тег должен начинаться с #');
+
+    } else if (hashtagsArray.length > 5) {
+
+      previewHashtags.setCustomValidity('Используйте не более пяти хэш-тегов');
+
+    } else if (hashtagsArray[i].match(/[^а-яёa-z0-9#]/gi)) {
+
+      previewHashtags.setCustomValidity('Используйте русские или латинские буквы и цифры');
+
+    } else if (hashtagsArray[i] === hashtagsArray[i - 1]) {
+
+      previewHashtags.setCustomValidity('Не повторяйте хэш-теги');
+
+    } else if (hashtagsArray[i].match(/\S#/g)) {
+
+      previewHashtags.setCustomValidity('Пишите хэш-теги через пробел');
+
+    } else {
+
+      previewHashtags.setCustomValidity('');
+
+    }
+
+  }
+};
+
+submitButton.addEventListener('click', function () {
+
+  hashtagsValidation(previewHashtags);
+
+});
