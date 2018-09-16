@@ -3,6 +3,7 @@
 var ESC_KEYCODE = 27;
 var PHOTOS_COUNT = 25;
 var SCALE_STEP = 25;
+var MAX_SCALE_VALUE = 100;
 
 var PHOTO_COMMENTS = [
   'Всё отлично!',
@@ -265,48 +266,49 @@ var buttonMinus = uploadSection.querySelector('.scale__control--smaller');
 var buttonPlus = uploadSection.querySelector('.scale__control--bigger');
 var scaleControlValue = uploadSection.querySelector('input[name="scale"]');
 var currentTransformScale = 1;
+var currentScaleValue = 100;
+scaleControlValue.value = currentScaleValue + '%';
+
+var getResizeValue = function (transformValue, controlValue) {
+
+  uploadedImg.style.transform = 'scale(' + transformValue + ')';
+  scaleControlValue.value = controlValue + '%';
+
+};
+
+var reducePreviewSize = function (step) {
+
+  if (currentScaleValue > step) {
+
+    currentScaleValue -= step;
+    currentTransformScale -= step / 100;
+
+  }
+
+};
+
+var increasePreviewSize = function (step) {
+
+  if (currentScaleValue + step <= MAX_SCALE_VALUE) {
+
+    currentScaleValue += step;
+    currentTransformScale += step / 100;
+
+  }
+
+};
 
 buttonMinus.addEventListener('click', function () {
 
-  var currentScaleValue = parseInt((scaleControlValue.value.split('')[0] + scaleControlValue.value.split('')[1]), 10);
-
-  if (scaleControlValue.value.split('').length < 3) {
-
-    currentScaleValue = parseInt(scaleControlValue.value.split('')[0], 10);
-
-  }
-
-  if (currentScaleValue >= SCALE_STEP) {
-
-    scaleControlValue.value = (currentScaleValue - SCALE_STEP) + '%';
-    currentTransformScale -= SCALE_STEP / 100;
-    uploadedImg.style.transform = 'scale(' + currentTransformScale + ')';
-
-  }
+  reducePreviewSize(SCALE_STEP);
+  getResizeValue(currentTransformScale, currentScaleValue);
 
 });
 
 buttonPlus.addEventListener('click', function () {
 
-  var currentScaleValue = parseInt((scaleControlValue.value.split('')[0] + scaleControlValue.value.split('')[1]), 10);
-
-  if (scaleControlValue.value.split('').length > 3) {
-
-    for (var i = 1; i < scaleControlValue.value.split('').length; i++) {
-
-      currentScaleValue += parseInt(scaleControlValue.value.split('')[i - 1], 10);
-
-    }
-
-  }
-
-  if (currentScaleValue + SCALE_STEP <= 100) {
-
-    scaleControlValue.value = (currentScaleValue + SCALE_STEP) + '%';
-    currentTransformScale += SCALE_STEP / 100;
-    uploadedImg.style.transform = 'scale(' + currentTransformScale + ')';
-
-  }
+  increasePreviewSize(SCALE_STEP);
+  getResizeValue(currentTransformScale, currentScaleValue);
 
 });
 
