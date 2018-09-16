@@ -266,7 +266,7 @@ var buttonMinus = uploadSection.querySelector('.scale__control--smaller');
 var buttonPlus = uploadSection.querySelector('.scale__control--bigger');
 var scaleControlValue = uploadSection.querySelector('input[name="scale"]');
 var currentTransformScale = 1;
-var currentScaleValue = 100;
+var currentScaleValue = MAX_SCALE_VALUE;
 scaleControlValue.value = currentScaleValue + '%';
 
 var getResizeValue = function (transformValue, controlValue) {
