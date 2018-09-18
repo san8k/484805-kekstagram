@@ -320,48 +320,59 @@ var previewHashtags = uploadSection.querySelector('input[name="hashtags"]');
 var previewDescription = uploadSection.querySelector('textarea[name="description"]');
 var submitButton = uploadSection.querySelector('#upload-submit');
 
+var findUniqueStrings = function (array) {
+
+  var obj = {};
+
+  for (var i = 0; i < array.length; i++) {
+
+    var string = array[i];
+    obj[string] = true;
+
+  }
+
+  return Object.keys(obj);
+
+};
+
 var hashtagsValidation = function (string) {
 
   var hashtagsLowerCase = string.value.toLowerCase();
 
   var hashtagsArray = hashtagsLowerCase.split(' ');
-  hashtagsArray.sort();
 
-  for (var i = 0; i < hashtagsArray.length; i++) {
+  if (hashtagsArray.length > 5) {
 
-    var currentHashtagLetters = hashtagsArray[i].split('');
+    return previewHashtags.setCustomValidity('Используйте не более пяти хэш-тегов');
 
-    if (currentHashtagLetters.length > 20) {
+  } else if (findUniqueStrings(hashtagsArray).length !== hashtagsArray.length) {
 
-      previewHashtags.setCustomValidity('Длина хэш-тега должна быть не более 20 символов');
+    return previewHashtags.setCustomValidity('Не повторяйте хэш-теги');
 
-    } else if (currentHashtagLetters[0] !== '#') {
+  } else {
 
-      previewHashtags.setCustomValidity('Хэш-тег должен начинаться с #');
+    for (var i = 0; i < hashtagsArray.length; i++) {
 
-    } else if (hashtagsArray.length > 5) {
+      if (hashtagsArray[i].length > 20) {
 
-      previewHashtags.setCustomValidity('Используйте не более пяти хэш-тегов');
+        return previewHashtags.setCustomValidity('Длина хэш-тега должна быть не более 20 символов');
 
-    } else if (hashtagsArray[i].match(/[^а-яёa-z0-9#]/gi)) {
+      } else if (hashtagsArray[i].match(/[^а-яёa-z0-9#]/gi)) {
 
-      previewHashtags.setCustomValidity('Используйте русские или латинские буквы и цифры');
+        return previewHashtags.setCustomValidity('Используйте русские или латинские буквы и цифры');
 
-    } else if (hashtagsArray[i] === hashtagsArray[i - 1]) {
+      } else if (hashtagsArray[i].match(/^[^#]/)) {
 
-      previewHashtags.setCustomValidity('Не повторяйте хэш-теги');
+        return previewHashtags.setCustomValidity('Пишите хэш-теги начиная с # через пробел');
 
-    } else if (hashtagsArray[i].match(/\S#/g)) {
-
-      previewHashtags.setCustomValidity('Пишите хэш-теги через пробел');
-
-    } else {
-
-      previewHashtags.setCustomValidity('');
+      }
 
     }
 
   }
+
+  return previewHashtags.setCustomValidity('');
+
 };
 
 submitButton.addEventListener('click', function () {
