@@ -16,7 +16,7 @@
 
   };
 
-  var createFragment = function (data, container) {
+  var addPicturesToDOM = function (data, container) {
 
     var fragment = document.createDocumentFragment();
     var createdElements = document.querySelector(container);
@@ -31,6 +31,6 @@
 
   };
 
-  createFragment(window.pictures.usersPhotos, '.pictures');
+  addPicturesToDOM(window.pictures.usersPhotos, '.pictures');
 
 })();

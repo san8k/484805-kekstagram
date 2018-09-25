@@ -33,7 +33,7 @@
 
     if (evt.keyCode === window.util.ESC_KEYCODE) {
 
-      hideIBigPicture();
+      hideBigPicture();
 
     }
 
@@ -46,7 +46,7 @@
 
   };
 
-  var hideIBigPicture = function () {
+  var hideBigPicture = function () {
 
     bigPicture.classList.add('hidden');
     document.removeEventListener('keydown', onBigPictureEscPress);
@@ -63,6 +63,6 @@
     });
   });
 
-  bigPicture.querySelector('#picture-cancel').addEventListener('click', hideIBigPicture);
+  bigPicture.querySelector('#picture-cancel').addEventListener('click', hideBigPicture);
 
 })();
