@@ -7,11 +7,15 @@
 
   var currentTransformScale = 1;
   var currentScaleValue = MAX_SCALE_VALUE;
-  window.util.scaleControlValue.value = currentScaleValue + '%';
+  var buttonMinus = window.util.uploadSection.querySelector('.scale__control--smaller');
+  var buttonPlus = window.util.uploadSection.querySelector('.scale__control--bigger');
+  var scaleControlValue = window.util.uploadSection.querySelector('input[name="scale"]');
+
+  scaleControlValue.value = currentScaleValue + '%';
   var getResizeValue = function (transformValue, controlValue) {
 
-    window.util.uploadedImg.style.transform = 'scale(' + transformValue + ')';
-    window.util.scaleControlValue.value = controlValue + '%';
+    window.effects.uploadedImg.style.transform = 'scale(' + transformValue + ')';
+    scaleControlValue.value = controlValue + '%';
 
   };
 
@@ -37,14 +41,14 @@
 
   };
 
-  window.util.buttonMinus.addEventListener('click', function () {
+  buttonMinus.addEventListener('click', function () {
 
     reducePreviewSize(SCALE_STEP);
     getResizeValue(currentTransformScale, currentScaleValue);
 
   });
 
-  window.util.buttonPlus.addEventListener('click', function () {
+  buttonPlus.addEventListener('click', function () {
 
     increasePreviewSize(SCALE_STEP);
     getResizeValue(currentTransformScale, currentScaleValue);

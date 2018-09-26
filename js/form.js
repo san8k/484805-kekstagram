@@ -2,9 +2,13 @@
 
 (function () {
 
+  var uploadOverlay = window.util.uploadSection.querySelector('.img-upload__overlay');
+  var uploadFile = window.util.uploadSection.querySelector('#upload-file');
+  var uploadCancel = window.util.uploadSection.querySelector('#upload-cancel');
+  var previewDescription = window.util.uploadSection.querySelector('textarea[name="description"]');
   var onRedactorEscPress = function (evt) {
 
-    if (evt.keyCode === window.util.ESC_KEYCODE && window.util.previewDescription !== document.activeElement && window.util.previewHashtags !== document.activeElement) {
+    if (evt.keyCode === window.util.ESC_KEYCODE && previewDescription !== document.activeElement && window.validation.previewHashtags !== document.activeElement) {
 
       hideImageRedactor();
 
@@ -14,22 +18,22 @@
 
   var showImageRedactor = function () {
 
-    window.util.uploadOverlay.classList.remove('hidden');
-    window.util.effectLevelFieldset.classList.add('hidden');
+    uploadOverlay.classList.remove('hidden');
+    window.effects.effectLevelFieldset.classList.add('hidden');
     document.addEventListener('keydown', onRedactorEscPress);
 
   };
 
   var hideImageRedactor = function () {
 
-    window.util.uploadOverlay.classList.add('hidden');
-    window.util.uploadFile.value = null;
+    uploadOverlay.classList.add('hidden');
+    uploadFile.value = null;
     document.removeEventListener('keydown', onRedactorEscPress);
 
   };
 
-  window.util.uploadFile.addEventListener('change', showImageRedactor);
+  uploadFile.addEventListener('change', showImageRedactor);
 
-  window.util.uploadCancel.addEventListener('click', hideImageRedactor);
+  uploadCancel.addEventListener('click', hideImageRedactor);
 
 })();
