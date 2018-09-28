@@ -57,7 +57,7 @@
 
     image.addEventListener('click', function () {
 
-      renderBigPhoto(window.pictures.usersPhotos[i - 1]);
+      renderBigPhoto(window.gallery.usersPhotosArr[i - 1]);
       showBigPicture();
 
     });
