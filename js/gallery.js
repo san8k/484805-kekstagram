@@ -18,9 +18,9 @@
 
   };
 
-  var photosArr = [];
-  var onLoad = function (data) {
 
+  var onLoad = function (data) {
+    var photosArr = [];
     var fragment = document.createDocumentFragment();
     var createdElementsContainer = document.querySelector('.pictures');
 
@@ -32,6 +32,19 @@
 
     createdElementsContainer.appendChild(fragment);
 
+    var miniPicturesContainer = document.querySelector('.pictures');
+    var miniPictures = miniPicturesContainer.querySelectorAll('img');
+
+    miniPictures.forEach(function (image, index) {
+
+      image.addEventListener('click', function () {
+
+        window.photo.renderBigPhoto(photosArr[index - 1]);
+        window.photo.showBigPicture();
+
+      });
+    });
+
   };
 
   var onError = function (message) {
@@ -41,17 +54,12 @@
     errorNode.style.position = 'absolute';
     errorNode.style.left = 0;
     errorNode.style.right = 0;
-    errorNode.style.fontSize = '40px';
+    errorNode.style.fontSize = '20px';
     errorNode.textContent = message;
     document.body.insertAdjacentElement('afterbegin', errorNode);
 
   };
 
   window.downloadUsersPhotos(onLoad, onError);
-
-  window.gallery = {
-    usersPhotosArr: photosArr
-  };
-
 
 })();

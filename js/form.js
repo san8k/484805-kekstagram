@@ -21,6 +21,7 @@
     uploadOverlay.classList.remove('hidden');
     window.effects.effectLevelFieldset.classList.add('hidden');
     document.addEventListener('keydown', onRedactorEscPress);
+    window.resize.scaleControlValue.value = window.resize.MAX_SCALE_VALUE + '%';
 
   };
 
@@ -29,6 +30,12 @@
     uploadOverlay.classList.add('hidden');
     uploadFile.value = null;
     document.removeEventListener('keydown', onRedactorEscPress);
+    window.validation.previewHashtags.value = '';
+    previewDescription.value = '';
+    window.effects.uploadedImg.style.filter = 'none';
+    window.effects.uploadedImg.style.transform = 'scale(1)';
+    window.resize.currentTransformScale = 1;
+    window.resize.currentScaleValue = window.resize.MAX_SCALE_VALUE;
 
   };
 
@@ -37,7 +44,6 @@
   uploadCancel.addEventListener('click', hideImageRedactor);
 
   var form = window.util.uploadSection.querySelector('.img-upload__form');
-  var uploadOverlay = window.util.uploadSection.querySelector('.img-upload__overlay');
 
   var successTemplate = document.querySelector('#success')
       .content
@@ -45,16 +51,13 @@
   var errorTemplate = document.querySelector('#error')
       .content
       .querySelector('.error');
-  // var loadingTemplate = document.querySelector('#messages')
-  //     .content
-  //     .querySelector('img-upload__message--loading');
 
   var renderMessage = function (status, message) {
     var messageNode = status.cloneNode(true);
 
     if (errorTemplate) {
 
-      messageNode.querySelector('.error__title').textContent = 'Ошибка загрузки файла. \n' + message;
+      messageNode.querySelector('.error__title').textContent = 'Ошибка загрузки файла. ' + message;
 
     }
 
@@ -68,12 +71,38 @@
     fragment.appendChild(currentStatus);
     messageContainer.appendChild(fragment);
 
+
+  };
+
+  var deleteMessageNode = function (statusNode) {
+
+    statusNode.remove();
+
   };
 
   var onLoad = function () {
 
     hideImageRedactor();
     showStatus(renderMessage(successTemplate));
+    var successNode = document.querySelector('.success');
+    var successButton = successNode.querySelector('.success__button');
+
+    var onSuccessPressEsc = function (evt) {
+
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
+
+        successNode.remove();
+
+      }
+
+    };
+    successButton.addEventListener('click', function () {
+
+      deleteMessageNode(successNode);
+
+    });
+
+    document.addEventListener('keydown', onSuccessPressEsc);
 
   };
 
@@ -81,11 +110,33 @@
 
     hideImageRedactor();
     showStatus(renderMessage(errorTemplate, message));
+    var errorNode = document.querySelector('.error');
+    var errorButtons = errorNode.querySelectorAll('.error__button');
+
+    var onErrorPressEsc = function (evt) {
+
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
+
+        errorNode.remove();
+
+      }
+
+    };
+
+    errorButtons.forEach(function (button) {
+
+      button.addEventListener('click', function () {
+
+        deleteMessageNode(errorNode);
+
+      });
+
+    });
+    document.addEventListener('keydown', onErrorPressEsc);
 
   };
 
   form.addEventListener('submit', function (evt) {
-
 
     evt.preventDefault();
     window.uploadUserForm(onLoad, onError, new FormData(form));
