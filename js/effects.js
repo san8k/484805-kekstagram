@@ -5,9 +5,18 @@
   var PIN_WIDTH = 18;
   var EFFECT_LEVEL_LINE_WIDTH = 455;
 
+  var effectPin = window.util.uploadSection.querySelector('.effect-level__pin');
+  var effectValue = window.util.uploadSection.querySelector('.effect-level__value');
+  var effectLevelFieldset = window.util.uploadSection.querySelector('.img-upload__effect-level');
+  var uploadedImg = window.util.uploadSection.querySelector('.img-upload__preview');
+  var effectLine = window.util.uploadSection.querySelector('.effect-level__line');
+  var effectDepthLine = window.util.uploadSection.querySelector('.effect-level__depth');
+  var effects = window.util.uploadSection.querySelector('.effects__list');
+
+
   var calculateEffectPower = function (pinPosition) {
 
-    window.util.effectValue.value = pinPosition + PIN_WIDTH / 2;
+    effectValue.value = pinPosition + PIN_WIDTH / 2;
     var currentPower = 100 * pinPosition / EFFECT_LEVEL_LINE_WIDTH;
     return currentPower;
 
@@ -15,36 +24,36 @@
 
   var tuneEffect = function (power) {
 
-    var currentFilter = window.util.uploadedImg.classList[1].split('--')[1];
+    var currentFilter = uploadedImg.classList[1].split('--')[1];
 
     switch (currentFilter) {
 
       case 'chrome':
-        window.util.uploadedImg.style.filter = 'grayscale(' + power / 100 + ')';
+        uploadedImg.style.filter = 'grayscale(' + power / 100 + ')';
         break;
 
       case 'sepia':
-        window.util.uploadedImg.style.filter = 'sepia(' + power / 100 + ')';
+        uploadedImg.style.filter = 'sepia(' + power / 100 + ')';
         break;
 
       case 'marvin':
-        window.util.uploadedImg.style.filter = 'invert(' + power + '%)';
+        uploadedImg.style.filter = 'invert(' + power + '%)';
         break;
 
       case 'phobos':
-        window.util.uploadedImg.style.filter = 'blur(' + (power / 33.3).toFixed(2) + 'px)';
+        uploadedImg.style.filter = 'blur(' + (power / 33.3).toFixed(2) + 'px)';
         break;
 
       case 'heat':
-        window.util.uploadedImg.style.filter = 'brightness(' + (power / 50 + 1) + ')';
+        uploadedImg.style.filter = 'brightness(' + (power / 50 + 1) + ')';
         break;
 
       default:
-        window.util.uploadedImg.style.filter = 'none';
+        uploadedImg.style.filter = 'none';
         break;
     }
 
-    return window.util.uploadedImg.style.filter;
+    return uploadedImg.style.filter;
 
   };
 
@@ -54,11 +63,11 @@
 
   };
 
-  window.util.effectPin.addEventListener('mousedown', function (evt) {
+  effectPin.addEventListener('mousedown', function (evt) {
 
-    var pinCoord = getCoordX(window.util.effectPin);
+    var pinCoord = getCoordX(effectPin);
     var shiftX = evt.pageX - pinCoord;
-    var lineCoord = getCoordX(window.util.effectLine);
+    var lineCoord = getCoordX(effectLine);
 
     var onMouseMove = function (evtMove) {
 
@@ -74,16 +83,16 @@
 
       }
 
-      window.util.effectPin.style.left = newCoord * 100 / EFFECT_LEVEL_LINE_WIDTH + '%';
-      window.util.effectDepthLine.style.width = newCoord * 100 / EFFECT_LEVEL_LINE_WIDTH + '%';
-      tuneEffect(calculateEffectPower(window.util.effectPin.offsetLeft));
+      effectPin.style.left = newCoord * 100 / EFFECT_LEVEL_LINE_WIDTH + '%';
+      effectDepthLine.style.width = newCoord * 100 / EFFECT_LEVEL_LINE_WIDTH + '%';
+      tuneEffect(calculateEffectPower(effectPin.offsetLeft));
     };
 
     var onMouseUp = function () {
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-      tuneEffect(calculateEffectPower(window.util.effectPin.offsetLeft));
+      tuneEffect(calculateEffectPower(effectPin.offsetLeft));
 
     };
 
@@ -94,30 +103,35 @@
 
   var changeEffect = function (effectName) {
 
-    var elementClassList = window.util.uploadedImg.classList;
+    var elementClassList = uploadedImg.classList;
     elementClassList.remove(elementClassList[1]);
     elementClassList.add('effects__preview--' + effectName);
 
     if (effectName === 'none') {
 
-      window.util.effectLevelFieldset.classList.add('hidden');
+      effectLevelFieldset.classList.add('hidden');
 
     } else {
 
-      window.util.effectLevelFieldset.classList.remove('hidden');
+      effectLevelFieldset.classList.remove('hidden');
 
     }
 
   };
 
-  window.util.effects.addEventListener('click', function (evt) {
+  effects.addEventListener('click', function (evt) {
 
     changeEffect(evt.target.defaultValue);
-    window.util.uploadedImg.style.filter = tuneEffect(100);
-    window.util.effectValue.value = 100;
-    window.util.effectPin.style.left = '100%';
-    window.util.effectDepthLine.style.width = '100%';
+    uploadedImg.style.filter = tuneEffect(100);
+    effectValue.value = 100;
+    effectPin.style.left = '100%';
+    effectDepthLine.style.width = '100%';
 
   }, true);
+
+  window.effects = {
+    effectLevelFieldset: effectLevelFieldset,
+    uploadedImg: uploadedImg
+  };
 
 })();
