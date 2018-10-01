@@ -80,7 +80,7 @@
 
   };
 
-  var onLoad = function () {
+  var onSuccessUploadForm = function () {
 
     hideImageRedactor();
     showStatus(renderMessage(successTemplate));
@@ -106,7 +106,7 @@
 
   };
 
-  var onError = function (message) {
+  var onErrorUploadForm = function (message) {
 
     hideImageRedactor();
     showStatus(renderMessage(errorTemplate, message));
@@ -139,7 +139,7 @@
   form.addEventListener('submit', function (evt) {
 
     evt.preventDefault();
-    window.uploadUserForm(onLoad, onError, new FormData(form));
+    window.backend.uploadUserForm(onSuccessUploadForm, onErrorUploadForm, new FormData(form));
 
   });
 

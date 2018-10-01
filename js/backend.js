@@ -39,16 +39,17 @@
 
   };
 
-  window.downloadUsersPhotos = function (onLoad, onError) {
+  window.backend = {
+    downloadUsersPhotos: function (onLoad, onError) {
 
-    serverInteraction('GET', URL_DOWNLOAD, onLoad, onError);
+      serverInteraction('GET', URL_DOWNLOAD, onLoad, onError);
 
-  };
+    },
+    uploadUserForm: function (onLoad, onError, data) {
 
-  window.uploadUserForm = function (onLoad, onError, data) {
+      serverInteraction('POST', URL_UPLOAD, onLoad, onError, data);
 
-    serverInteraction('POST', URL_UPLOAD, onLoad, onError, data);
-
+    }
   };
 
 

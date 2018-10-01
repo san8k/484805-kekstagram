@@ -19,7 +19,7 @@
   };
 
 
-  var onLoad = function (data) {
+  var onSuccessLoadUsersPhotos = function (data) {
     var photosArr = [];
     var fragment = document.createDocumentFragment();
     var createdElementsContainer = document.querySelector('.pictures');
@@ -47,7 +47,7 @@
 
   };
 
-  var onError = function (message) {
+  var onErrorLoadUsersPhotos = function (message) {
 
     var errorNode = document.createElement('div');
     errorNode.style = 'z-index: 1000; margin: 0 auto; text-align: center; background-color: #ff1703;';
@@ -60,6 +60,6 @@
 
   };
 
-  window.downloadUsersPhotos(onLoad, onError);
+  window.backend.downloadUsersPhotos(onSuccessLoadUsersPhotos, onErrorLoadUsersPhotos);
 
 })();
