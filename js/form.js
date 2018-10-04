@@ -74,12 +74,6 @@
 
   };
 
-  var deleteMessageNode = function (statusNode) {
-
-    statusNode.remove();
-
-  };
-
   var onSuccessUploadForm = function () {
 
     hideImageRedactor();
@@ -98,7 +92,7 @@
     };
     successButton.addEventListener('click', function () {
 
-      deleteMessageNode(successNode);
+      window.util.deleteElement(successNode);
 
     });
 
@@ -127,7 +121,7 @@
 
       button.addEventListener('click', function () {
 
-        deleteMessageNode(errorNode);
+        window.util.deleteElement(errorNode);
 
       });
 
