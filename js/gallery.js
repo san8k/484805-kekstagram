@@ -37,7 +37,7 @@
 
     var updateGallery = function (photosArray) {
 
-      window.util.removeElementsFoundQuerySelectorAll(usersPhotosPreview);
+      window.util.removeElements(usersPhotosPreview);
       window.util.createElements(photosContainer, window.render.renderUserPhoto, photosArray);
       usersPhotosPreview = photosContainer.querySelectorAll('a');
       addListenerOnPreviews(photosArray);

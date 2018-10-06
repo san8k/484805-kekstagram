@@ -7,7 +7,7 @@
     UPLOAD: 'https://js.dump.academy/kekstagram'
   };
 
-  var serverInteraction = function (interaction, url, onLoad, onError) {
+  var serverInteraction = function (interaction, url, onLoad, onError, data) {
 
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -37,7 +37,7 @@
     xhr.timeout = 10000;
 
     xhr.open(interaction, url);
-    xhr.send();
+    xhr.send(data);
 
   };
 

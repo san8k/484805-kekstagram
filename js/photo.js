@@ -33,13 +33,14 @@
 
       displayedCommentsCounter.textContent = (currentPhoto.comments.length < MAX_COMMENTS_IN_BLOCK) ? currentPhoto.comments.length : MAX_COMMENTS_IN_BLOCK;
       window.util.createElements(commentsContainer, window.render.renderSocialComment, currentPhoto.comments.slice(0, 5));
-      bigPicture.querySelector('.comments-loader').classList.add('hidden');
+
 
     },
     showBigPicture: function () {
 
       bigPicture.classList.remove('hidden');
       document.addEventListener('keydown', onBigPictureEscPress);
+      document.querySelector('body').classList.add('modal-open');
 
     },
     hideBigPicture: function () {
@@ -47,6 +48,7 @@
       bigPicture.classList.add('hidden');
       document.removeEventListener('keydown', onBigPictureEscPress);
       commentsContainer.innerHTML = null;
+      document.querySelector('body').classList.remove('modal-open');
 
     }
   };

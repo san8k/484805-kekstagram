@@ -55,7 +55,7 @@
   var renderMessage = function (status, message) {
     var messageNode = status.cloneNode(true);
 
-    if (errorTemplate) {
+    if (status === errorTemplate) {
 
       messageNode.querySelector('.error__title').textContent = 'Ошибка загрузки файла. ' + message;
 
@@ -95,7 +95,11 @@
       window.util.deleteElement(successNode);
 
     });
+    window.addEventListener('click', function () {
 
+      window.util.deleteElement(successNode);
+
+    });
     document.addEventListener('keydown', onSuccessPressEsc);
 
   };
@@ -124,6 +128,11 @@
         window.util.deleteElement(errorNode);
 
       });
+
+    });
+    window.addEventListener('click', function () {
+
+      window.util.deleteElement(errorNode);
 
     });
     document.addEventListener('keydown', onErrorPressEsc);

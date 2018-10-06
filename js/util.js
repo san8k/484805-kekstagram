@@ -45,14 +45,18 @@
       element.remove();
 
     },
-    removeElementsFoundQuerySelectorAll: function (element) {
+    removeElements: function (element) {
 
       Array.prototype.forEach.call(element, function (node) {
         node.parentNode.removeChild(node);
       });
 
-    }
+    },
+    compareRandom: function () {
 
+      return Math.random() - 0.5;
+
+    }
   };
 
 })();
