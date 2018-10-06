@@ -18,7 +18,7 @@
     },
     showNew: function (arr) {
 
-      return arr.slice().sort(window.util.compareRandom).splice(0, 10);
+      return arr.slice().sort(window.util.compareRandom).slice(0, 10);
 
     }
   };
