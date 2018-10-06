@@ -18,7 +18,10 @@
     },
     showNew: function (arr) {
 
-      return arr.slice().sort(window.util.compareRandom).splice(15);
+      var newPhotosArr = arr.slice();
+      newPhotosArr.sort(window.util.compareRandom).splice(10);
+
+      return newPhotosArr;
 
     }
   };

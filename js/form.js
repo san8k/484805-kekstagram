@@ -74,6 +74,20 @@
 
   };
 
+  var setKeydownListener = function (statusNode) {
+
+    var onMessagePressEsc = function (evt) {
+
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
+        statusNode.remove();
+      }
+
+      document.removeEventListener('keydown', onMessagePressEsc);
+    };
+    document.addEventListener('keydown', onMessagePressEsc);
+
+  };
+
   var onSuccessUploadForm = function () {
 
     hideImageRedactor();
@@ -81,26 +95,15 @@
     var successNode = document.querySelector('.success');
     var successButton = successNode.querySelector('.success__button');
 
-    var onSuccessPressEsc = function (evt) {
-
-      if (evt.keyCode === window.util.ESC_KEYCODE) {
-
-        successNode.remove();
-
-      }
-
-    };
     successButton.addEventListener('click', function () {
-
       window.util.deleteElement(successNode);
-
     });
+
     window.addEventListener('click', function () {
-
       window.util.deleteElement(successNode);
-
     });
-    document.addEventListener('keydown', onSuccessPressEsc);
+
+    setKeydownListener(successNode);
 
   };
 
@@ -111,31 +114,19 @@
     var errorNode = document.querySelector('.error');
     var errorButtons = errorNode.querySelectorAll('.error__button');
 
-    var onErrorPressEsc = function (evt) {
-
-      if (evt.keyCode === window.util.ESC_KEYCODE) {
-
-        errorNode.remove();
-
-      }
-
-    };
-
     errorButtons.forEach(function (button) {
 
       button.addEventListener('click', function () {
-
         window.util.deleteElement(errorNode);
-
       });
 
     });
+
     window.addEventListener('click', function () {
-
       window.util.deleteElement(errorNode);
-
     });
-    document.addEventListener('keydown', onErrorPressEsc);
+
+    setKeydownListener(errorNode);
 
   };
 
