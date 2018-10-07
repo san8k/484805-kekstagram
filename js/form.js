@@ -35,6 +35,7 @@
     window.effects.uploadedImg.style.transform = 'scale(1)';
     window.resizer.currentTransformScale = 1;
     window.resizer.currentScaleValue = window.resizer.MAX_SCALE_VALUE;
+    window.file.fileChooser.value = null;
 
   };
 

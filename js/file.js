@@ -28,4 +28,8 @@
     }
   });
 
+  window.file = {
+    fileChooser: fileChooser
+  };
+
 })();
