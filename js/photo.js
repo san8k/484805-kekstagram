@@ -26,6 +26,8 @@
     }
   };
 
+  var onLoaderClick;
+
   window.photo = {
     renderBigPhoto: function (currentPhoto) {
 
@@ -44,7 +46,7 @@
       displayedCommentsCounter.textContent = (currentPhoto.comments.length < MAX_COMMENTS_IN_BLOCK) ? currentPhoto.comments.length : MAX_COMMENTS_IN_BLOCK;
       window.util.createElements(commentsContainer, window.render.renderSocialComment, currentPhoto.comments.slice(0, 5));
 
-      var onLoaderClick = function () {
+      onLoaderClick = function () {
 
         window.util.createElements(commentsContainer, window.render.renderSocialComment, currentPhoto.comments.slice(counter.nextComments, counter.nextComments + MAX_COMMENTS_IN_BLOCK));
 
@@ -84,6 +86,8 @@
       commentsContainer.innerHTML = null;
       document.querySelector('body').classList.remove('modal-open');
       counter.resetComments();
+      commentsLoader.removeEventListener('click', onLoaderClick);
+
     }
   };
 
