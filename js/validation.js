@@ -13,14 +13,17 @@
 
     if (hashtagsArray.length > 5) {
 
+      previewHashtags.style.borderColor = 'red';
       return previewHashtags.setCustomValidity('Используйте не более пяти хэш-тегов');
 
     } else if (window.util.findUniqueStrings(hashtagsArray).length !== hashtagsArray.length) {
 
+      previewHashtags.style.borderColor = 'red';
       return previewHashtags.setCustomValidity('Не повторяйте хэш-теги');
 
     } else {
 
+      previewHashtags.style.borderColor = 'red';
       for (var i = 0; i < hashtagsArray.length; i++) {
 
         if (hashtagsArray[i].length > 20) {
@@ -34,6 +37,10 @@
         } else if (hashtagsArray[i].match(/^[^#]/)) {
 
           return previewHashtags.setCustomValidity('Пишите хэш-теги начиная с # через пробел');
+
+        } else if (hashtagsArray[i].length !== 0 && hashtagsArray[i].length < 2) {
+
+          return previewHashtags.setCustomValidity('Хеш-тег не может быть пустым');
 
         }
 

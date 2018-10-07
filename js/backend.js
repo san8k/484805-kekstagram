@@ -2,10 +2,12 @@
 
 (function () {
 
-  var URL_DOWNLOAD = 'https://js.dump.academy/kekstagram/data';
-  var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
+  var Url = {
+    DOWNLOAD: 'https://js.dump.academy/kekstagram/data',
+    UPLOAD: 'https://js.dump.academy/kekstagram'
+  };
 
-  var serverInteraction = function (interaction, url, onLoad, onError) {
+  var serverInteraction = function (interaction, url, onLoad, onError, data) {
 
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -29,25 +31,25 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError('Запрос не успел выполниться за ' + Math.floor(xhr.timeout / 1000) + ' секунд');
     });
 
     xhr.timeout = 10000;
 
     xhr.open(interaction, url);
-    xhr.send();
+    xhr.send(data);
 
   };
 
   window.backend = {
     downloadUsersPhotos: function (onLoad, onError) {
 
-      serverInteraction('GET', URL_DOWNLOAD, onLoad, onError);
+      serverInteraction('GET', Url.DOWNLOAD, onLoad, onError);
 
     },
     uploadUserForm: function (onLoad, onError, data) {
 
-      serverInteraction('POST', URL_UPLOAD, onLoad, onError, data);
+      serverInteraction('POST', Url.UPLOAD, onLoad, onError, data);
 
     }
   };

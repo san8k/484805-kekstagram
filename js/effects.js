@@ -26,32 +26,16 @@
 
     var currentFilter = uploadedImg.classList[1].split('--')[1];
 
-    switch (currentFilter) {
+    var currentFilterToImageStyleFilter = {
+      'chrome': 'grayscale(' + power / 100 + ')',
+      'sepia': 'sepia(' + power / 100 + ')',
+      'marvin': 'invert(' + power + '%)',
+      'phobos': 'blur(' + (power / 33.3).toFixed(2) + 'px)',
+      'heat': 'brightness(' + (power / 50 + 1) + ')',
+      'none': 'none'
+    };
 
-      case 'chrome':
-        uploadedImg.style.filter = 'grayscale(' + power / 100 + ')';
-        break;
-
-      case 'sepia':
-        uploadedImg.style.filter = 'sepia(' + power / 100 + ')';
-        break;
-
-      case 'marvin':
-        uploadedImg.style.filter = 'invert(' + power + '%)';
-        break;
-
-      case 'phobos':
-        uploadedImg.style.filter = 'blur(' + (power / 33.3).toFixed(2) + 'px)';
-        break;
-
-      case 'heat':
-        uploadedImg.style.filter = 'brightness(' + (power / 50 + 1) + ')';
-        break;
-
-      default:
-        uploadedImg.style.filter = 'none';
-        break;
-    }
+    uploadedImg.style.filter = currentFilterToImageStyleFilter[currentFilter];
 
     return uploadedImg.style.filter;
 

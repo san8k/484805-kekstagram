@@ -55,7 +55,7 @@
   var renderMessage = function (status, message) {
     var messageNode = status.cloneNode(true);
 
-    if (errorTemplate) {
+    if (status === errorTemplate) {
 
       messageNode.querySelector('.error__title').textContent = 'Ошибка загрузки файла. ' + message;
 
@@ -74,9 +74,17 @@
 
   };
 
-  var deleteMessageNode = function (statusNode) {
+  var setKeydownListener = function (statusNode) {
 
-    statusNode.remove();
+    var onMessagePressEsc = function (evt) {
+
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
+        statusNode.remove();
+      }
+
+      document.removeEventListener('keydown', onMessagePressEsc);
+    };
+    document.addEventListener('keydown', onMessagePressEsc);
 
   };
 
@@ -87,22 +95,15 @@
     var successNode = document.querySelector('.success');
     var successButton = successNode.querySelector('.success__button');
 
-    var onSuccessPressEsc = function (evt) {
-
-      if (evt.keyCode === window.util.ESC_KEYCODE) {
-
-        successNode.remove();
-
-      }
-
-    };
     successButton.addEventListener('click', function () {
-
-      deleteMessageNode(successNode);
-
+      window.util.deleteElement(successNode);
     });
 
-    document.addEventListener('keydown', onSuccessPressEsc);
+    window.addEventListener('click', function () {
+      window.util.deleteElement(successNode);
+    });
+
+    setKeydownListener(successNode);
 
   };
 
@@ -113,26 +114,19 @@
     var errorNode = document.querySelector('.error');
     var errorButtons = errorNode.querySelectorAll('.error__button');
 
-    var onErrorPressEsc = function (evt) {
-
-      if (evt.keyCode === window.util.ESC_KEYCODE) {
-
-        errorNode.remove();
-
-      }
-
-    };
-
     errorButtons.forEach(function (button) {
 
       button.addEventListener('click', function () {
-
-        deleteMessageNode(errorNode);
-
+        window.util.deleteElement(errorNode);
       });
 
     });
-    document.addEventListener('keydown', onErrorPressEsc);
+
+    window.addEventListener('click', function () {
+      window.util.deleteElement(errorNode);
+    });
+
+    setKeydownListener(errorNode);
 
   };
 

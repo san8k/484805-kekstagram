@@ -10,39 +10,45 @@
     'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......',
     'Вот это тачка!'
   ];
+  var MAX_COMMENTS_IN_BLOCK = 5;
+
   var bigPicture = document.querySelector('.big-picture');
+  var commentsContainer = bigPicture.querySelector('.social__comments');
 
   window.photo = {
     renderBigPhoto: function (currentPhoto) {
 
+      var calculateCommentsNumber = function () {
+
+        return currentPhoto.comments.length;
+
+      };
+
       var bigPictureImage = bigPicture.querySelector('.big-picture__img');
       bigPictureImage.querySelector('img').src = currentPhoto.url;
       bigPicture.querySelector('.likes-count').textContent = currentPhoto.likes;
-      bigPicture.querySelector('.comments-count').textContent = currentPhoto.comments.length;
+      bigPicture.querySelector('.comments-count').textContent = calculateCommentsNumber(currentPhoto);
       bigPicture.querySelector('.social__caption').textContent = PHOTO_DESCRIPTIONS[window.util.getRandomInt(0, 5)];
+      var displayedCommentsCounter = bigPicture.querySelector('.display-comments-count');
 
-      var socialComment = bigPicture.querySelectorAll('.social__comment');
-      socialComment.forEach(function (elem, i) {
+      displayedCommentsCounter.textContent = (currentPhoto.comments.length < MAX_COMMENTS_IN_BLOCK) ? currentPhoto.comments.length : MAX_COMMENTS_IN_BLOCK;
+      window.util.createElements(commentsContainer, window.render.renderSocialComment, currentPhoto.comments.slice(0, 5));
 
-        socialComment[i].querySelector('p').textContent = currentPhoto.comments[i];
-        socialComment[i].querySelector('img').src = 'img/avatar-' + window.util.getRandomInt(1, 6) + '.svg';
-
-      });
-
-      bigPicture.querySelector('.social__comment-count').classList.remove('visually-hidden');
-      bigPicture.querySelector('.comments-loader').classList.remove('visually-hidden');
 
     },
     showBigPicture: function () {
 
       bigPicture.classList.remove('hidden');
       document.addEventListener('keydown', onBigPictureEscPress);
+      document.querySelector('body').classList.add('modal-open');
 
     },
     hideBigPicture: function () {
 
       bigPicture.classList.add('hidden');
       document.removeEventListener('keydown', onBigPictureEscPress);
+      commentsContainer.innerHTML = null;
+      document.querySelector('body').classList.remove('modal-open');
 
     }
   };
@@ -56,7 +62,6 @@
     }
 
   };
-
 
   bigPicture.querySelector('#picture-cancel').addEventListener('click', window.photo.hideBigPicture);
 
