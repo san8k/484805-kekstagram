@@ -46,11 +46,18 @@
 
     var debouncedFilter = window.debounce(updateGallery);
 
-    buttonPopular.addEventListener('click', function () {
+    var buttonHighliter = function (button) {
 
       buttonNew.classList.remove('img-filters__button--active');
       buttonDiscussed.classList.remove('img-filters__button--active');
-      buttonPopular.classList.add('img-filters__button--active');
+      buttonPopular.classList.remove('img-filters__button--active');
+      button.classList.add('img-filters__button--active');
+
+    };
+
+    buttonPopular.addEventListener('click', function () {
+
+      buttonHighliter(buttonPopular);
       debouncedFilter(userPhotosArray);
 
     });
@@ -58,9 +65,7 @@
     buttonNew.addEventListener('click', function () {
 
       filteredArray = window.filters.showNew(userPhotosArray);
-      buttonPopular.classList.remove('img-filters__button--active');
-      buttonDiscussed.classList.remove('img-filters__button--active');
-      buttonNew.classList.add('img-filters__button--active');
+      buttonHighliter(buttonNew);
       debouncedFilter(filteredArray);
 
     });
@@ -68,9 +73,7 @@
     buttonDiscussed.addEventListener('click', function () {
 
       filteredArray = window.filters.showDiscussed(userPhotosArray);
-      buttonNew.classList.remove('img-filters__button--active');
-      buttonPopular.classList.remove('img-filters__button--active');
-      buttonDiscussed.classList.add('img-filters__button--active');
+      buttonHighliter(buttonDiscussed);
       debouncedFilter(filteredArray);
 
     });
