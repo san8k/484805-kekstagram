@@ -9,22 +9,18 @@
     uploadSection: uploadSection,
 
     getRandomInt: function (min, max) {
-
       return Math.floor(min + Math.random() * (max - min + 1));
-
     },
     findUniqueStrings: function (array) {
 
       var obj = {};
-      for (var i = 0; i < array.length; i++) {
 
+      for (var i = 0; i < array.length; i++) {
         var string = array[i];
         obj[string] = true;
-
       }
 
       return Object.keys(obj);
-
     },
     createElements: function (container, renderFunction, elementsArray) {
 
@@ -32,18 +28,14 @@
       var createdElementsContainer = container;
 
       for (var i = 0; i < elementsArray.length; i++) {
-
         fragment.appendChild(renderFunction(elementsArray[i]));
-
       }
 
       createdElementsContainer.appendChild(fragment);
 
     },
     deleteElement: function (element) {
-
       element.remove();
-
     },
     removeElements: function (element) {
 
@@ -53,9 +45,7 @@
 
     },
     compareRandom: function () {
-
       return Math.random() - 0.5;
-
     }
   };
 

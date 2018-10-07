@@ -28,7 +28,7 @@
 
   var onLoaderClick;
 
-  window.photo = {
+  window.bigPhoto = {
     renderBigPhoto: function (currentPhoto) {
 
       var calculateCommentsNumber = function () {
@@ -44,12 +44,11 @@
       var displayedCommentsCounter = bigPicture.querySelector('.display-comments-count');
 
       displayedCommentsCounter.textContent = (currentPhoto.comments.length < MAX_COMMENTS_IN_BLOCK) ? currentPhoto.comments.length : MAX_COMMENTS_IN_BLOCK;
-      window.util.createElements(commentsContainer, window.render.renderSocialComment, currentPhoto.comments.slice(0, 5));
+      window.util.createElements(commentsContainer, window.renderer.renderSocialComment, currentPhoto.comments.slice(0, 5));
 
       onLoaderClick = function () {
 
-        window.util.createElements(commentsContainer, window.render.renderSocialComment, currentPhoto.comments.slice(counter.nextComments, counter.nextComments + MAX_COMMENTS_IN_BLOCK));
-
+        window.util.createElements(commentsContainer, window.renderer.renderSocialComment, currentPhoto.comments.slice(counter.nextComments, counter.nextComments + MAX_COMMENTS_IN_BLOCK));
         displayedCommentsCounter.textContent = parseInt(displayedCommentsCounter.textContent, 10) + MAX_COMMENTS_IN_BLOCK;
 
         if (displayedCommentsCounter.textContent > currentPhoto.comments.length) {
@@ -94,11 +93,11 @@
   var onBigPictureEscPress = function (evt) {
 
     if (evt.keyCode === window.util.ESC_KEYCODE) {
-      window.photo.hideBigPicture();
+      window.bigPhoto.hideBigPicture();
     }
 
   };
 
-  bigPicture.querySelector('#picture-cancel').addEventListener('click', window.photo.hideBigPicture);
+  bigPicture.querySelector('#picture-cancel').addEventListener('click', window.bigPhoto.hideBigPicture);
 
 })();

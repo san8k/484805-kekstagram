@@ -10,7 +10,7 @@
     userPhotosArray = data;
     var photosContainer = document.querySelector('.pictures');
 
-    window.util.createElements(photosContainer, window.render.renderUserPhoto, userPhotosArray);
+    window.util.createElements(photosContainer, window.renderer.renderUserPhoto, userPhotosArray);
 
     var usersPhotosPreview = photosContainer.querySelectorAll('a');
 
@@ -20,8 +20,8 @@
 
         image.addEventListener('click', function () {
 
-          window.photo.renderBigPhoto(elements[index]);
-          window.photo.showBigPicture();
+          window.bigPhoto.renderBigPhoto(elements[index]);
+          window.bigPhoto.showBigPicture();
 
         });
       });
@@ -38,7 +38,7 @@
     var updateGallery = function (photosArray) {
 
       window.util.removeElements(usersPhotosPreview);
-      window.util.createElements(photosContainer, window.render.renderUserPhoto, photosArray);
+      window.util.createElements(photosContainer, window.renderer.renderUserPhoto, photosArray);
       usersPhotosPreview = photosContainer.querySelectorAll('a');
       addListenerOnPreviews(photosArray);
 

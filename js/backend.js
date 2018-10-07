@@ -15,14 +15,13 @@
     xhr.addEventListener('load', function () {
 
       switch (xhr.status) {
-
         case 200:
           onLoad(xhr.response);
           break;
         default:
           onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-
       }
+
       return xhr.response;
     });
 
@@ -35,7 +34,6 @@
     });
 
     xhr.timeout = 10000;
-
     xhr.open(interaction, url);
     xhr.send(data);
 
@@ -43,16 +41,11 @@
 
   window.backend = {
     downloadUsersPhotos: function (onLoad, onError) {
-
       serverInteraction('GET', Url.DOWNLOAD, onLoad, onError);
-
     },
     uploadUserForm: function (onLoad, onError, data) {
-
       serverInteraction('POST', Url.UPLOAD, onLoad, onError, data);
-
     }
   };
-
 
 })();

@@ -13,13 +13,12 @@
   var effectDepthLine = window.util.uploadSection.querySelector('.effect-level__depth');
   var effects = window.util.uploadSection.querySelector('.effects__list');
 
-
   var calculateEffectPower = function (pinPosition) {
 
     effectValue.value = pinPosition + PIN_WIDTH / 2;
     var currentPower = 100 * pinPosition / EFFECT_LEVEL_LINE_WIDTH;
-    return currentPower;
 
+    return currentPower;
   };
 
   var tuneEffect = function (power) {
@@ -38,13 +37,11 @@
     uploadedImg.style.filter = currentFilterToImageStyleFilter[currentFilter];
 
     return uploadedImg.style.filter;
-
   };
 
   var getCoordX = function (elem) {
 
     return elem.getBoundingClientRect().left;
-
   };
 
   effectPin.addEventListener('mousedown', function (evt) {
@@ -58,18 +55,15 @@
       var newCoord = evtMove.pageX - shiftX - lineCoord + PIN_WIDTH / 2;
 
       if (newCoord < 0) {
-
         newCoord = 0;
-
       } else if (newCoord > EFFECT_LEVEL_LINE_WIDTH) {
-
         newCoord = EFFECT_LEVEL_LINE_WIDTH;
-
       }
 
       effectPin.style.left = newCoord * 100 / EFFECT_LEVEL_LINE_WIDTH + '%';
       effectDepthLine.style.width = newCoord * 100 / EFFECT_LEVEL_LINE_WIDTH + '%';
       tuneEffect(calculateEffectPower(effectPin.offsetLeft));
+
     };
 
     var onMouseUp = function () {
@@ -92,13 +86,9 @@
     elementClassList.add('effects__preview--' + effectName);
 
     if (effectName === 'none') {
-
       effectLevelFieldset.classList.add('hidden');
-
     } else {
-
       effectLevelFieldset.classList.remove('hidden');
-
     }
 
   };
