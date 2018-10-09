@@ -2,15 +2,15 @@
 
 (function () {
 
-  var userPhotosArray;
-  var filteredArray;
+  var userPhotos;
+  var filteredPhotos;
 
   var onSuccessLoadUsersPhotos = function (data) {
 
-    userPhotosArray = data;
+    userPhotos = data;
     var photosContainer = document.querySelector('.pictures');
 
-    window.util.createElements(photosContainer, window.renderer.renderUserPhoto, userPhotosArray);
+    window.util.createElements(photosContainer, window.renderer.renderUserPhoto, userPhotos);
 
     var usersPhotosPreview = photosContainer.querySelectorAll('a');
 
@@ -28,7 +28,7 @@
 
     };
 
-    addListenerOnPreviews(userPhotosArray);
+    addListenerOnPreviews(userPhotos);
 
     window.filters.galleryFilters.classList.remove('img-filters--inactive');
     var buttonPopular = window.filters.galleryFilters.querySelector('#filter-popular');
@@ -46,7 +46,7 @@
 
     var debouncedFilter = window.debounce(updateGallery);
 
-    var buttonHighliter = function (button) {
+    var highlightButton = function (button) {
 
       buttonNew.classList.remove('img-filters__button--active');
       buttonDiscussed.classList.remove('img-filters__button--active');
@@ -57,24 +57,24 @@
 
     buttonPopular.addEventListener('click', function () {
 
-      buttonHighliter(buttonPopular);
-      debouncedFilter(userPhotosArray);
+      highlightButton(buttonPopular);
+      debouncedFilter(userPhotos);
 
     });
 
     buttonNew.addEventListener('click', function () {
 
-      filteredArray = window.filters.showNew(userPhotosArray);
-      buttonHighliter(buttonNew);
-      debouncedFilter(filteredArray);
+      filteredPhotos = window.filters.showNew(userPhotos);
+      highlightButton(buttonNew);
+      debouncedFilter(filteredPhotos);
 
     });
 
     buttonDiscussed.addEventListener('click', function () {
 
-      filteredArray = window.filters.showDiscussed(userPhotosArray);
-      buttonHighliter(buttonDiscussed);
-      debouncedFilter(filteredArray);
+      filteredPhotos = window.filters.showDiscussed(userPhotos);
+      highlightButton(buttonDiscussed);
+      debouncedFilter(filteredPhotos);
 
     });
 
@@ -96,7 +96,7 @@
   window.backend.downloadUsersPhotos(onSuccessLoadUsersPhotos, onErrorLoadUsersPhotos);
 
   window.gallery = {
-    usersPhotosArray: userPhotosArray,
+    usersPhotosArray: userPhotos,
   };
 
 })();

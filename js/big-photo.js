@@ -28,6 +28,14 @@
 
   var onLoaderClick;
 
+  var onBigPictureEscPress = function (evt) {
+
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      window.bigPhoto.hideBigPicture();
+    }
+
+  };
+
   window.bigPhoto = {
     renderBigPhoto: function (currentPhoto) {
 
@@ -82,20 +90,12 @@
 
       bigPicture.classList.add('hidden');
       document.removeEventListener('keydown', onBigPictureEscPress);
-      commentsContainer.innerHTML = null;
+      commentsContainer.innerHTML = '';
       document.querySelector('body').classList.remove('modal-open');
       counter.resetComments();
       commentsLoader.removeEventListener('click', onLoaderClick);
 
     }
-  };
-
-  var onBigPictureEscPress = function (evt) {
-
-    if (evt.keyCode === window.util.ESC_KEYCODE) {
-      window.bigPhoto.hideBigPicture();
-    }
-
   };
 
   bigPicture.querySelector('#picture-cancel').addEventListener('click', window.bigPhoto.hideBigPicture);

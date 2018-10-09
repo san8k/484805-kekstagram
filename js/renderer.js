@@ -17,10 +17,10 @@
     },
     renderSocialComment: function (comment) {
 
-      var commmentTemplate = document.querySelector('#socialComment')
+      var commentTemplate = document.querySelector('#socialComment')
                               .content
                               .querySelector('li');
-      var commentElement = commmentTemplate.cloneNode(true);
+      var commentElement = commentTemplate.cloneNode(true);
       commentElement.querySelector('img').src = 'img/avatar-' + window.util.getRandomInt(1, 6) + '.svg';
       commentElement.querySelector('p').textContent = comment;
 

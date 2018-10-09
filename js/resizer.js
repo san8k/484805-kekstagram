@@ -19,7 +19,7 @@
 
   var getResizeValue = function (transformValue, controlValue) {
 
-    window.effects.uploadedImg.style.transform = 'scale(' + transformValue + ')';
+    window.effects.uploadedImage.style.transform = 'scale(' + transformValue + ')';
     scaleControlValue.value = controlValue + '%';
 
   };

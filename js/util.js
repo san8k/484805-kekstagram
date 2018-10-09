@@ -25,13 +25,12 @@
     createElements: function (container, renderFunction, elementsArray) {
 
       var fragment = document.createDocumentFragment();
-      var createdElementsContainer = container;
 
       for (var i = 0; i < elementsArray.length; i++) {
         fragment.appendChild(renderFunction(elementsArray[i]));
       }
 
-      createdElementsContainer.appendChild(fragment);
+      container.appendChild(fragment);
 
     },
     deleteElement: function (element) {

@@ -31,8 +31,8 @@
     document.removeEventListener('keydown', onRedactorEscPress);
     window.validator.previewHashtags.value = '';
     previewDescription.value = '';
-    window.effects.uploadedImg.style.filter = 'none';
-    window.effects.uploadedImg.style.transform = 'scale(1)';
+    window.effects.uploadedImage.style.filter = 'none';
+    window.effects.uploadedImage.style.transform = 'scale(1)';
     window.resizer.currentTransformScale = 1;
     window.resizer.currentScaleValue = window.resizer.MAX_SCALE_VALUE;
     window.file.fileChooser.value = null;
@@ -50,15 +50,20 @@
       .content
       .querySelector('.error');
 
-  var renderMessage = function (status, message) {
 
-    var messageNode = status.cloneNode(true);
+  var renderSuccess = function () {
 
-    if (status === errorTemplate) {
-      messageNode.querySelector('.error__title').textContent = 'Ошибка загрузки файла. ' + message;
-    }
+    var successNode = successTemplate.cloneNode(true);
 
-    return messageNode;
+    return successNode;
+  };
+
+  var renderError = function (message) {
+
+    var errorNode = errorTemplate.cloneNode(true);
+    errorNode.querySelector('.error__title').textContent = 'Ошибка загрузки файла. ' + message;
+
+    return errorNode;
   };
 
   var showStatus = function (currentStatus) {
@@ -89,7 +94,8 @@
   var onSuccessUploadForm = function () {
 
     hideImageRedactor();
-    showStatus(renderMessage(successTemplate));
+
+    showStatus(renderSuccess());
     var successNode = document.querySelector('.success');
     var successButton = successNode.querySelector('.success__button');
 
@@ -108,7 +114,7 @@
   var onErrorUploadForm = function (message) {
 
     hideImageRedactor();
-    showStatus(renderMessage(errorTemplate, message));
+    showStatus(renderError(message));
     var errorNode = document.querySelector('.error');
     var errorButtons = errorNode.querySelectorAll('.error__button');
 
