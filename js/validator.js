@@ -25,9 +25,6 @@
         if (hashtags[i].length > 20) {
           return previewHashtags.setCustomValidity('Длина хэш-тега должна быть не более 20 символов');
 
-        } else if (hashtags[i].match(/[^а-яёa-z0-9#]/gi)) {
-          return previewHashtags.setCustomValidity('Используйте русские или латинские буквы и цифры');
-
         } else if (hashtags[i].match(/^[^#]/)) {
           return previewHashtags.setCustomValidity('Пишите хэш-теги начиная с # через пробел');
 
