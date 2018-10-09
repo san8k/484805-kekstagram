@@ -6,12 +6,11 @@
   var uploadFile = window.util.uploadSection.querySelector('#upload-file');
   var uploadCancel = window.util.uploadSection.querySelector('#upload-cancel');
   var previewDescription = window.util.uploadSection.querySelector('textarea[name="description"]');
+
   var onRedactorEscPress = function (evt) {
 
-    if (evt.keyCode === window.util.ESC_KEYCODE && previewDescription !== document.activeElement && window.validation.previewHashtags !== document.activeElement) {
-
+    if (evt.keyCode === window.util.ESC_KEYCODE && previewDescription !== document.activeElement && window.validator.previewHashtags !== document.activeElement) {
       hideImageRedactor();
-
     }
 
   };
@@ -21,7 +20,7 @@
     uploadOverlay.classList.remove('hidden');
     window.effects.effectLevelFieldset.classList.add('hidden');
     document.addEventListener('keydown', onRedactorEscPress);
-    window.resize.scaleControlValue.value = window.resize.MAX_SCALE_VALUE + '%';
+    window.resizer.scaleControlValue.value = window.resizer.MAX_SCALE_VALUE + '%';
 
   };
 
@@ -30,21 +29,20 @@
     uploadOverlay.classList.add('hidden');
     uploadFile.value = null;
     document.removeEventListener('keydown', onRedactorEscPress);
-    window.validation.previewHashtags.value = '';
+    window.validator.previewHashtags.value = '';
     previewDescription.value = '';
-    window.effects.uploadedImg.style.filter = 'none';
-    window.effects.uploadedImg.style.transform = 'scale(1)';
-    window.resize.currentTransformScale = 1;
-    window.resize.currentScaleValue = window.resize.MAX_SCALE_VALUE;
+    window.effects.uploadedImage.style.filter = 'none';
+    window.effects.uploadedImage.style.transform = 'scale(1)';
+    window.resizer.currentTransformScale = 1;
+    window.resizer.currentScaleValue = window.resizer.MAX_SCALE_VALUE;
+    window.file.fileChooser.value = null;
 
   };
 
   uploadFile.addEventListener('change', showImageRedactor);
-
   uploadCancel.addEventListener('click', hideImageRedactor);
 
   var form = window.util.uploadSection.querySelector('.img-upload__form');
-
   var successTemplate = document.querySelector('#success')
       .content
       .querySelector('.success');
@@ -52,16 +50,20 @@
       .content
       .querySelector('.error');
 
-  var renderMessage = function (status, message) {
-    var messageNode = status.cloneNode(true);
 
-    if (status === errorTemplate) {
+  var renderSuccess = function () {
 
-      messageNode.querySelector('.error__title').textContent = 'Ошибка загрузки файла. ' + message;
+    var successNode = successTemplate.cloneNode(true);
 
-    }
+    return successNode;
+  };
 
-    return messageNode;
+  var renderError = function (message) {
+
+    var errorNode = errorTemplate.cloneNode(true);
+    errorNode.querySelector('.error__title').textContent = 'Ошибка загрузки файла. ' + message;
+
+    return errorNode;
   };
 
   var showStatus = function (currentStatus) {
@@ -70,7 +72,6 @@
     var messageContainer = document.querySelector('main');
     fragment.appendChild(currentStatus);
     messageContainer.appendChild(fragment);
-
 
   };
 
@@ -83,7 +84,9 @@
       }
 
       document.removeEventListener('keydown', onMessagePressEsc);
+
     };
+
     document.addEventListener('keydown', onMessagePressEsc);
 
   };
@@ -91,7 +94,8 @@
   var onSuccessUploadForm = function () {
 
     hideImageRedactor();
-    showStatus(renderMessage(successTemplate));
+
+    showStatus(renderSuccess());
     var successNode = document.querySelector('.success');
     var successButton = successNode.querySelector('.success__button');
 
@@ -110,7 +114,7 @@
   var onErrorUploadForm = function (message) {
 
     hideImageRedactor();
-    showStatus(renderMessage(errorTemplate, message));
+    showStatus(renderError(message));
     var errorNode = document.querySelector('.error');
     var errorButtons = errorNode.querySelectorAll('.error__button');
 
