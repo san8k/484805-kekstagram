@@ -30,10 +30,10 @@
 
     addListenerOnPreviews(userPhotos);
 
-    window.filters.galleryFilters.classList.remove('img-filters--inactive');
-    var buttonPopular = window.filters.galleryFilters.querySelector('#filter-popular');
-    var buttonNew = window.filters.galleryFilters.querySelector('#filter-new');
-    var buttonDiscussed = window.filters.galleryFilters.querySelector('#filter-discussed');
+    window.filters.gallery.classList.remove('img-filters--inactive');
+    var buttonPopular = window.filters.gallery.querySelector('#filter-popular');
+    var buttonNew = window.filters.gallery.querySelector('#filter-new');
+    var buttonDiscussed = window.filters.gallery.querySelector('#filter-discussed');
 
     var updateGallery = function (photosArray) {
 
@@ -94,9 +94,5 @@
   };
 
   window.backend.downloadUsersPhotos(onSuccessLoadUsersPhotos, onErrorLoadUsersPhotos);
-
-  window.gallery = {
-    usersPhotosArray: userPhotos,
-  };
 
 })();

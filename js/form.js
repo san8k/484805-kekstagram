@@ -15,7 +15,7 @@
 
   };
 
-  var showImageRedactor = function () {
+  var onFileChange = function () {
 
     uploadOverlay.classList.remove('hidden');
     window.effects.effectLevelFieldset.classList.add('hidden');
@@ -35,12 +35,14 @@
     window.effects.uploadedImage.style.transform = 'scale(1)';
     window.resizer.currentTransformScale = 1;
     window.resizer.currentScaleValue = window.resizer.MAX_SCALE_VALUE;
-    window.file.fileChooser.value = null;
+    window.file.chooser.value = null;
 
   };
 
-  uploadFile.addEventListener('change', showImageRedactor);
-  uploadCancel.addEventListener('click', hideImageRedactor);
+  uploadFile.addEventListener('change', onFileChange);
+  uploadCancel.addEventListener('click', function () {
+    hideImageRedactor();
+  });
 
   var form = window.util.uploadSection.querySelector('.img-upload__form');
   var successTemplate = document.querySelector('#success')

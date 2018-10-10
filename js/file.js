@@ -29,7 +29,7 @@
   });
 
   window.file = {
-    fileChooser: fileChooser
+    chooser: fileChooser
   };
 
 })();

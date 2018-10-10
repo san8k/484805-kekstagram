@@ -5,7 +5,7 @@
   var galleryFilters = document.querySelector('.img-filters');
 
   window.filters = {
-    galleryFilters: galleryFilters,
+    gallery: galleryFilters,
     showDiscussed: function (arr) {
 
       return arr.slice().sort(function (firstPhoto, secondPhoto) {
